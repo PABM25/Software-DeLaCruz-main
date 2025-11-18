@@ -39,3 +39,15 @@ Para correr este proyecto en tu computadora, necesitas tener instalado [Node.js]
 ```bash
 git clone [https://github.com/TU_USUARIO/Software-DeLaCruz-main.git](https://github.com/TU_USUARIO/Software-DeLaCruz-main.git)
 cd Software-DeLaCruz-main
+
+cd server
+npm install  # Instala las dependencias del servidor
+node index.js # Inicia el servidor (por defecto en puerto 3000)
+
+
+# Si estás en la carpeta 'server', regresa atrás:
+cd ..
+
+npm install  # Instala las dependencias de React/Vite
+npm run dev  # Inicia la interfaz web´´´
+
