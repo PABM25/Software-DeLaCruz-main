@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/empresa.css"; // Importar estilo
-import Navbar from "../../components/NavBar";
+import Navbar from "../../components/navBar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBuilding, faPlus } from '@fortawesome/free-solid-svg-icons';
+import api from '../../api';
 
 const Empresa = () => {
     const navigate = useNavigate();
@@ -29,7 +30,7 @@ const Empresa = () => {
     useEffect(() => {
         const fetchEmpresas = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/centrodetrabajo');
+                const response = await fetch(`${api.defaults.baseURL}/api/centrodetrabajo`);
                 const data = await response.json();
                 setEmpresas(data);
 
@@ -62,7 +63,7 @@ const Empresa = () => {
         const confirmacion = window.confirm(`¿Estás seguro de que deseas inhabilitar al centro con nombre ${CentroSeleccionado?.nombre_planta}?`);
 
         if (confirmacion) {
-            fetch(`http://localhost:3000/api/estadoempresa/${id}`, {  
+            fetch(`${api.defaults.baseURL}/api/estadoempresa/${id}`, {
                 method: 'DELETE',
             })
                 .then((response) => {

@@ -1,11 +1,12 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from '../context/AuthContext';
-import Sidebar from "./SideBar";
+import Sidebar from "./sidebar";
 import "../styles/nav-bar.css";
 import Logo from "../resources/logo2.ico";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import api from '../api';
 
 const Navbar = () => {
   const { logout, user } = useAuth(); // Obtén el usuario del contexto
@@ -36,7 +37,7 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/Usuarios')
+    fetch(`${api.defaults.baseURL}/api/Usuarios`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Error al obtener los datos de usuario');

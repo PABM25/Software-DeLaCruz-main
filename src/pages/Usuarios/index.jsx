@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import '../../styles/usuario.css';
+import '../../styles/Usuario.css';
 import '../../styles/base.css';
-import Navbar from '../../components/NavBar';
-import Sidebar from '../../components/SideBar';
+import Navbar from '../../components/navBar';
+import Sidebar from '../../components/sidebar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import api from '../../api';
 
 const Usuarios = () => {
     const [Usuario, setUsuario] = useState([]);
@@ -22,7 +23,7 @@ const Usuarios = () => {
         }
     };
     useEffect(() => {
-        fetch('http://localhost:3000/api/Usuarios')
+        fetch(`${api.defaults.baseURL}/api/Usuarios`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Error al obtener los datos de usuario');
@@ -42,7 +43,7 @@ const Usuarios = () => {
         const confirmacion = window.confirm(`¿Estás seguro de que deseas eliminar a ${usuarioSeleccionado?.nombre_completo} de la empresa ${usuarioSeleccionado?.nombre_planta}?`);
         
         if (confirmacion) {
-            fetch(`http://localhost:3000/api/eliminarusuarios/${id}`, {  // Asegúrate de que la URL es correcta
+            fetch(`${api.defaults.baseURL}/api/eliminarusuarios/${id}`, {  // Asegúrate de que la URL es correcta
                 method: 'DELETE',
             })
             .then((response) => {

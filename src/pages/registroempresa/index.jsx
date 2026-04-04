@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/registro-empresa.css"; // Importar estilo
-import Navbar from "../../components/NavBar"; // Importar el componente Navbar
+import Navbar from "../../components/navBar"; // Importar el componente Navbar
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBuilding, faPlus } from '@fortawesome/free-solid-svg-icons'; // O el ícono que prefieras
+import api from '../../api';
 
 
 const RegistroEmp = () => {
@@ -49,7 +50,7 @@ const RegistroEmp = () => {
     e.preventDefault();
     if (validar()) {
       try {
-        const response = await fetch('http://localhost:3000/api/registroempresa', {
+        const response = await fetch(`${api.defaults.baseURL}/api/registroempresa`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import '../../styles/dashboardempresa.css';
-import Navbar from '../../components/NavBar';
+import Navbar from '../../components/navBar';
+import api from '../../api';
 
 const DashboardEmpresas = () => {
     const [empresas, setEmpresas] = useState([]);
@@ -20,24 +21,24 @@ const DashboardEmpresas = () => {
         const fetchData = async () => {
             if (selectedEmpresa) {
                 try {
-                    const cantidadPecherasResponse = await fetch(`http://localhost:3000/api/cantidadpecherasxplanta?nombre_planta=${selectedEmpresa}`);
+                    const cantidadPecherasResponse = await fetch(`${api.defaults.baseURL}/api/cantidadpecherasxplanta?nombre_planta=${selectedEmpresa}`);
                     if (!cantidadPecherasResponse.ok) throw new Error('Error al obtener la cantidad de pecheras');
                     const cantidadpecherasxempresaData = await cantidadPecherasResponse.json();
                     setcantidadpecherasxempresa(cantidadpecherasxempresaData.cantidadpecherasxplanta || 0);
 
 
-                    const pecherasHistorialResponse = await fetch(`http://localhost:3000/api/pecherashistorialxplanta?nombre_planta=${selectedEmpresa}`);
+                    const pecherasHistorialResponse = await fetch(`${api.defaults.baseURL}/api/pecherashistorialxplanta?nombre_planta=${selectedEmpresa}`);
                     if (!pecherasHistorialResponse.ok) throw new Error('Error al obtener el historial de pecheras');
                     const pecherashistorialxplantaData = await pecherasHistorialResponse.json();
                     setpecherashistorialxplanta(pecherashistorialxplantaData.pecherashistorialxplanta || 0);
 
 
-                    const lavadosResponse = await fetch(`http://localhost:3000/api/cantidadlavadosxplanta?nombre_planta=${selectedEmpresa}`);
+                    const lavadosResponse = await fetch(`${api.defaults.baseURL}/api/cantidadlavadosxplanta?nombre_planta=${selectedEmpresa}`);
                     if (!lavadosResponse.ok) throw new Error('Error al obtener los datos de pecheras');
                     const cantidadlavadosxplantaData = await lavadosResponse.json();
                     setcantidadlavadosxplanta(cantidadlavadosxplantaData.cantidadlavadosxplanta || 0);
 
-                    const pecherasMesResponse = await fetch(`http://localhost:3000/api/cantidadpecherasmesxplanta?nombre_planta=${selectedEmpresa}`);
+                    const pecherasMesResponse = await fetch(`${api.defaults.baseURL}/api/cantidadpecherasmesxplanta?nombre_planta=${selectedEmpresa}`);
                     if (!pecherasMesResponse.ok) throw new Error('Error al obtener la cantidad de pecheras del mes');
                     const cantidadpecherasmesxplantaData = await pecherasMesResponse.json();
                     setcantidadpecherasmesxplanta(cantidadpecherasmesxplantaData.cantidadpecherasmesxplanta || 0);
@@ -58,7 +59,7 @@ const DashboardEmpresas = () => {
 useEffect(() => {
     const fetchEmpresas = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/centrodetrabajo');
+            const response = await fetch(`${api.defaults.baseURL}/api/centrodetrabajo`);
             const data = await response.json();
             setEmpresas(data);
 
@@ -80,7 +81,7 @@ useEffect(() => {
     useEffect(() => {
         const fetchPecheras = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/pecheras');
+                const response = await fetch(`${api.defaults.baseURL}/api/pecheras`);
                 if (!response.ok) throw new Error('Error al obtener los datos de pecheras');
                 const data = await response.json();
                 setPecheras(data);

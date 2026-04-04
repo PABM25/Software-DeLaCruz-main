@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import api from '../api';
 
 const AuthContext = createContext();
 
@@ -21,7 +22,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       // Enviar las credenciales (correo y contraseña en texto plano) al backend
-      const response = await fetch('http://localhost:3000/api/login', {
+      const response = await fetch(`${api.defaults.baseURL}/api/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

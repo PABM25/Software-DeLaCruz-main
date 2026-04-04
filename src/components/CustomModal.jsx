@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import '../../src/styles/custom-modal.css'; // Estilos del modal
 import * as XLSX from 'xlsx'; // Librería para exportar a Excel
 import logo from '../resources/logo.png'; // Logo de la aplicación
+import api from '../api';
 
 /**
  * Componente CustomModal
@@ -28,8 +29,8 @@ const CustomModal = ({ show, title, onClose, onConfirm }) => {
     const fetchData = async () => {
       try {
         const responses = await Promise.all([
-          fetch('http://localhost:3000/api/pecherashistorial'),
-          fetch('http://localhost:3000/api/pecheras'),
+          fetch(`${api.defaults.baseURL}/api/pecherashistorial`),
+          fetch(`${api.defaults.baseURL}/api/pecheras`),
         ]);
 
         const [pecherasHistorialData, pecherasData] = await Promise.all(
@@ -66,7 +67,7 @@ const CustomModal = ({ show, title, onClose, onConfirm }) => {
   const getFechasLavados = async (idPechera, adjustedEndDate) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/Lavados?startDate=${startDate}&endDate=${adjustedEndDate.toISOString()}`
+        `${api.defaults.baseURL}/api/Lavados?startDate=${startDate}&endDate=${adjustedEndDate.toISOString()}`
       );
       if (!response.ok) throw new Error('Error al obtener fechas de lavados');
 

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import '../../styles/eliminar-pechera.css';
-import Navbar from '../../components/NavBar';
+import Navbar from '../../components/navBar';
 import axios from 'axios'; 
 import swal from 'sweetalert';
+import api from '../../api';
 
 const EliminarPechera = () => {
     const [pecheras, setPecheras] = useState([]);
@@ -14,7 +15,7 @@ const EliminarPechera = () => {
     // Función para obtener el UID más reciente
     const fetchLatestUID = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/latest-uid');
+            const response = await fetch(`${api.defaults.baseURL}/api/latest-uid`);
             if (!response.ok) {
                 throw new Error('Error al obtener el UID más reciente');
             }
@@ -29,7 +30,7 @@ const EliminarPechera = () => {
     // Función para eliminar una pechera individual
     const eliminarPechera = async (id_pechera_registro) => {
         try {
-            const response = await axios.delete(`http://localhost:3000/api/eliminarpechera/${id_pechera_registro}`);
+            const response = await api.delete(`/api/eliminarpechera/${id_pechera_registro}`);
             if (response.status === 200) {
                 setPecheras((prevPecheras) =>
                     prevPecheras.filter(pechera => pechera.id_pechera_registro !== id_pechera_registro)
@@ -65,7 +66,7 @@ const EliminarPechera = () => {
         const ids = pecheras.map(pechera => pechera.id_pechera_registro);
     
         try {
-            const response = await axios.delete('http://localhost:3000/api/eliminarpecherasmulti', { data: { ids } });
+            const response = await api.delete(`/api/eliminarpecherasmulti`, { data: { ids } });
             if (response.status === 200) {
                 setPecheras([]); // Limpiar la lista en el frontend después de la eliminación
                 swal("Eliminadas", "Todas las pecheras se eliminaron correctamente", "success");
@@ -97,7 +98,7 @@ const EliminarPechera = () => {
     // Función para obtener los detalles de la pechera usando el UID
     const fetchPecheraDetails = async (uid) => {
         try {
-            const response = await fetch(`http://localhost:3000/api/pecherasleer/${uid}`);
+            const response = await fetch(`${api.defaults.baseURL}/api/pecherasleer/${uid}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
