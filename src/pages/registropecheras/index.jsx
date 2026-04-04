@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/registro-pecheras.css";
-import Navbar from "../../components/NavBar";
-import Sidebar from "../../components/SideBar";
+import Navbar from "../../components/navBar";
+import Sidebar from "../../components/sidebar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2'; // Importamos SweetAlert2
 //import 'sweetalert2/src/sweetalert2.scss'; // Estilo predeterminado
 import 'sweetalert2/dist/sweetalert2.min.css';
+import api from '../../api';
 
 
 const RegistroPecheras = () => {
@@ -30,7 +31,7 @@ const RegistroPecheras = () => {
     // Efecto para obtener UIDs desde Arduino
     const fetchUIDFromArduino = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/latest-uid');
+            const response = await fetch(`${api.defaults.baseURL}/api/latest-uid`);
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const data = await response.json();
 
@@ -56,7 +57,7 @@ const RegistroPecheras = () => {
     useEffect(() => {
         const fetchEmpresas = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/centrodetrabajo');
+                const response = await fetch(`${api.defaults.baseURL}/api/centrodetrabajo`);
                 if (!response.ok) throw new Error('Error al obtener los datos de planta');
                 const data = await response.json();
                 setEmpresas(data);
@@ -102,7 +103,7 @@ const RegistroPecheras = () => {
 
         // Enviar los datos a la API
         try {
-            const response = await fetch('http://localhost:3000/api/registropecheras', {
+            const response = await fetch(`${api.defaults.baseURL}/api/registropecheras`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -6,8 +6,8 @@ import '../../styles/base.css';
 
 
 // Componentes personalizados
-import Navbar from '../../components/NavBar';
-import Sidebar from '../../components/SideBar';
+import Navbar from '../../components/navBar';
+import Sidebar from '../../components/sidebar';
 
 // Importaciones para gráficos (Chart.js)
 import { Bar, Line } from 'react-chartjs-2';
@@ -33,6 +33,7 @@ import { faUserPlus, faFileDownload, faCheckCircle, faTimesCircle } from '@forta
 
 // Modal personalizado
 import CustomModal from '../../components/CustomModal';
+import api from '../../api';
 
 // Configuración y registro de componentes de gráficos en Chart.js
 ChartJS.register(
@@ -77,15 +78,15 @@ const Dashboard = () => {
             try {
                 // Realiza múltiples solicitudes a la API y espera sus resultados
                 const responses = await Promise.all([
-                    fetch('http://localhost:3000/api/cantidadpecheras'),
-                    fetch('http://localhost:3000/api/pecherashistorial'),
-                    fetch('http://localhost:3000/api/pecheras'),
-                    fetch('http://localhost:3000/api/cantidadpecherasmes'),
-                    fetch('http://localhost:3000/api/pecheraenuso'),
-                    fetch('http://localhost:3000/api/pecherasdisponibles'),
-                    fetch('http://localhost:3000/api/fechapecheras'),
-                    fetch(`http://localhost:3000/api/pecherasxmes?ano=${anoSeleccionado}`),
-                    fetch('http://localhost:3000/api/cantidadlavados')
+                    fetch(`${api.defaults.baseURL}/api/cantidadpecheras`),
+                    fetch(`${api.defaults.baseURL}/api/pecherashistorial`),
+                    fetch(`${api.defaults.baseURL}/api/pecheras`),
+                    fetch(`${api.defaults.baseURL}/api/cantidadpecherasmes`),
+                    fetch(`${api.defaults.baseURL}/api/pecheraenuso`),
+                    fetch(`${api.defaults.baseURL}/api/pecherasdisponibles`),
+                    fetch(`${api.defaults.baseURL}/api/fechapecheras`),
+                    fetch(`${api.defaults.baseURL}/api/pecherasxmes?ano=${anoSeleccionado}`),
+                    fetch(`${api.defaults.baseURL}/api/cantidadlavados`)
                 ]);
 
                 // Procesa las respuestas y actualiza el estado correspondiente

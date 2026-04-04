@@ -1,9 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from './components/NavBar';
-import Sidebar from './components/SideBar';
-import Dashboard from './pages/Dashboard';
+import Navbar from './components/navBar';
+import Sidebar from './components/sidebar';
+import Dashboard from './pages/dashboard';
 import RegistroPecheras from './pages/registropecheras';
 import Login from './pages/login';
 import RegistroEmp from './pages/registroempresa';

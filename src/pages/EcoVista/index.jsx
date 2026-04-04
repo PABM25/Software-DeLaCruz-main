@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import '../../styles/eco-vista.css';
-import Navbar from '../../components/NavBar';
+import Navbar from '../../components/navBar';
 import {
   Chart as ChartJS,
   CategoryScale,

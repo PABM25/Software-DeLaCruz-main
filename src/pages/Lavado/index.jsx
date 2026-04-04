@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../styles/lavado.css';
-import Navbar from '../../components/NavBar';
-import axios from 'axios';
+import '../../styles/Lavado.css';
+import Navbar from '../../components/navBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTint } from '@fortawesome/free-solid-svg-icons';
 import swal from 'sweetalert';
+import api from '../../api';
 
 
 const Lavado = () => {
@@ -17,7 +17,7 @@ const Lavado = () => {
     // Función para obtener el UID más reciente
     const fetchLatestUID = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/latest-uid');
+            const response = await fetch(`${api.defaults.baseURL}/api/latest-uid`);
             if (!response.ok) {
                 throw new Error('Error al obtener el UID más reciente');
             }
@@ -32,7 +32,7 @@ const Lavado = () => {
     // Función para obtener los detalles de la pechera usando el UID
     const fetchPecheraDetails = async (uid) => {
         try {
-            const response = await fetch(`http://localhost:3000/api/pecherasleer/${uid}`);
+            const response = await fetch(`${api.defaults.baseURL}/api/pecherasleer/${uid}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -81,7 +81,7 @@ const Lavado = () => {
                 Observaciones: pechera.Observaciones || '' // Capturar observaciones
             }));
     
-            const response = await axios.post('http://localhost:3000/api/registrolavado', { ids: idsWithObservations });
+            const response = await api.post(`/api/registrolavado`, { ids: idsWithObservations });
     
             if (response.status === 200) {
                 swal({

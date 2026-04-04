@@ -2,9 +2,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 import '../../styles/modificar-pecheras.css';
-import Navbar from '../../components/NavBar';
+import Navbar from '../../components/navBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import api from '../../api';
 
 
 const ModificarPecheraSinleer = () => {
@@ -29,7 +30,7 @@ const ModificarPecheraSinleer = () => {
         const { id_planta, Cantidad_Lavados, Talla, Parametros, Observaciones, Índice_Microbiológico } = pechera;
 
         try {
-            const response = await fetch(`http://localhost:3000/api/modificarpecheras/${pechera.id_pechera_registro}`, {
+            const response = await fetch(`${api.defaults.baseURL}/api/modificarpecheras/${pechera.id_pechera_registro}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -58,7 +59,7 @@ const ModificarPecheraSinleer = () => {
 
     const fetchPecheraDetails = async (id_pechera_registro) => {
         try {
-            const response = await fetch(`http://localhost:3000/api/pecheraid?id_pechera_registro=${id_pechera_registro}`);
+            const response = await fetch(`${api.defaults.baseURL}/api/pecheraid?id_pechera_registro=${id_pechera_registro}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -82,7 +83,7 @@ const ModificarPecheraSinleer = () => {
 
     const fetchPlantas = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/centrodetrabajo');
+            const response = await fetch(`${api.defaults.baseURL}/api/centrodetrabajo`);
             if (!response.ok) {
                 throw new Error('Error al obtener las plantas');
             }

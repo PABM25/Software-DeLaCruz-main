@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import '../../styles/info-pechera.css';
-import Navbar from '../../components/NavBar';
+import Navbar from '../../components/navBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import api from '../../api';
 
 const ModificarPecheras = () => {
     const navigate = useNavigate(); // Hook para redireccionar
@@ -37,7 +38,7 @@ const ModificarPecheras = () => {
     // Función para obtener el UID más reciente
     const fetchLatestUID = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/latest-uid');
+            const response = await fetch(`${api.defaults.baseURL}/api/latest-uid`);
             if (!response.ok) {
                 throw new Error('Error al obtener el UID más reciente');
             }
@@ -52,7 +53,7 @@ const ModificarPecheras = () => {
     // Función para obtener los detalles de la pechera usando el UID
     const fetchPecheraDetails = async (id_pechera_registro) => {
         try {
-            const response = await fetch(`http://localhost:3000/api/pecheraid?id_pechera_registro=${id_pechera_registro}`);
+            const response = await fetch(`${api.defaults.baseURL}/api/pecheraid?id_pechera_registro=${id_pechera_registro}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -76,7 +77,7 @@ const ModificarPecheras = () => {
     };
     const fetchlavados = async (id_pechera_registro) => {
         try {
-            const response = await fetch(`http://localhost:3000/api/pecheraidlavado?id_pechera_registro=${id_pechera_registro}`);
+            const response = await fetch(`${api.defaults.baseURL}/api/pecheraidlavado?id_pechera_registro=${id_pechera_registro}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -101,7 +102,7 @@ const ModificarPecheras = () => {
     // Función para obtener los nombres de las plantas
     const fetchPlantas = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/centrodetrabajo');
+            const response = await fetch(`${api.defaults.baseURL}/api/centrodetrabajo`);
             if (!response.ok) {
                 throw new Error('Error al obtener los lavados');
             }

@@ -7,13 +7,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/dato-pecheras.css';
-import Navbar from '../../components/NavBar';
+import Navbar from '../../components/navBar';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartBar, faEdit, faTrash, faTimes, faFileExcel, faFilePdf, faMagnifyingGlass, faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import api from '../../api';
 
 
 /**
@@ -50,7 +51,7 @@ const Pecheras = () => {
 
     // Carga inicial de datos al montar el componente
     useEffect(() => {
-        fetch('http://localhost:3000/api/pecheras')
+        fetch(`${api.defaults.baseURL}/api/pecheras`)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Error al obtener los datos de pecheras');
@@ -120,7 +121,7 @@ const Pecheras = () => {
     const eliminarpechera = (id) => {
         const confirmacion = window.confirm(`¿Estás seguro de que deseas eliminar a la pechera con id ${id}?`);
         if (confirmacion) {
-            fetch(`http://localhost:3000/api/eliminarpechera/${id}`, { method: 'DELETE' })
+            fetch(`${api.defaults.baseURL}/api/eliminarpechera/${id}`, { method: 'DELETE' })
                 .then((response) => {
                     if (!response.ok) {
                         throw new Error('Error al eliminar la pechera');

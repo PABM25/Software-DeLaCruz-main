@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../../styles/modificar-usuario.css";
-import Navbar from "../../components/NavBar";
+import Navbar from "../../components/navBar";
+import api from '../../api';
 
 const ModificarUsuario = () => {
     const { id_login } = useParams(); // Obtener el id_login de la URL
@@ -28,7 +29,7 @@ const ModificarUsuario = () => {
 
         const fetchUsuario = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/usuarioid?id_login=${id_login}`);
+                const response = await fetch(`${api.defaults.baseURL}/api/usuarioid?id_login=${id_login}`);
                 if (!response.ok) throw new Error('Error al obtener los datos del usuario');
 
                 const data = await response.json();
@@ -46,7 +47,7 @@ const ModificarUsuario = () => {
 
     // Cargar la lista de empresas para el select
     useEffect(() => {
-        fetch('http://localhost:3000/api/centrodetrabajo')
+        fetch(`${api.defaults.baseURL}/api/centrodetrabajo`)
             .then((response) => {
                 if (!response.ok) throw new Error('Error al obtener los datos de planta');
                 return response.json();
@@ -72,7 +73,7 @@ const ModificarUsuario = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`http://localhost:3000/api/modificarusuario/${id_login}`, {
+            const response = await fetch(`${api.defaults.baseURL}/api/modificarusuario/${id_login}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

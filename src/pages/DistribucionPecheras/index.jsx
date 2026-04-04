@@ -7,11 +7,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/distribucion-pecheras.css";
-import Navbar from "../../components/NavBar";
-import Sidebar from "../../components/SideBar";
+import Navbar from "../../components/navBar";
+import Sidebar from "../../components/sidebar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faTrash, faSync } from '@fortawesome/free-solid-svg-icons'
 import swal from 'sweetalert';
+import api from '../../api';
 
 const ActualizarPecheras = () => {
     const navigate = useNavigate();
@@ -41,7 +42,7 @@ const ActualizarPecheras = () => {
      */
     const fetchEmpresas = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/centrodetrabajo');
+            const response = await fetch(`${api.defaults.baseURL}/api/centrodetrabajo`);
             if (!response.ok) {
                 throw new Error('Error al obtener los datos de planta');
             }
@@ -57,7 +58,7 @@ const ActualizarPecheras = () => {
      */
     const fetchUIDFromArduino = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/latest-uid');
+            const response = await fetch(`${api.defaults.baseURL}/api/latest-uid`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -112,7 +113,7 @@ const ActualizarPecheras = () => {
                 id_planta: pechera.id_planta,   // Centro de trabajo seleccionado
             };
     
-            const response = await fetch('http://localhost:3000/api/modificarplantapechera', {
+            const response = await fetch(`${api.defaults.baseURL}/api/modificarplantapechera`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

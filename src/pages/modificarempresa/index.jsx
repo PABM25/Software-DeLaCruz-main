@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../../styles/modificar-emp.css";
-import Navbar from "../../components/NavBar";
+import Navbar from "../../components/navBar";
+import api from '../../api';
 
 const ModificarPlanta = () => { // Renombrar a ModificarPlanta
     const { id_planta } = useParams(); // Obtener el id de la URL
@@ -18,7 +19,7 @@ const ModificarPlanta = () => { // Renombrar a ModificarPlanta
     
         const fetchEmpresa = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/centrodetrabajoid?id_planta=${id_planta}`);
+                const response = await fetch(`${api.defaults.baseURL}/api/centrodetrabajoid?id_planta=${id_planta}`);
 
                 console.log("Respuesta del servidor:", response); // Verifica la respuesta
                 if (!response.ok) {
@@ -52,7 +53,7 @@ const ModificarPlanta = () => { // Renombrar a ModificarPlanta
         e.preventDefault();
         console.log('Datos enviados:', empresa); // Imprime los datos enviados
         try {
-            const response = await fetch(`http://localhost:3000/api/actualizarempresa`, {
+            const response = await fetch(`${api.defaults.baseURL}/api/actualizarempresa`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

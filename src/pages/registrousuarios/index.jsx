@@ -3,10 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../styles/registro-usuarios.css';
 import '../../styles/base.css';
-import Navbar from '../../components/NavBar';
-import Sidebar from '../../components/SideBar';
+import Navbar from '../../components/navBar';
+import Sidebar from '../../components/sidebar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons'; // Importa el ícono faPlus
+import api from '../../api';
 
 const RegistroUsuarios = () => {
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ const RegistroUsuarios = () => {
   };
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/centrodetrabajo')
+    fetch(`${api.defaults.baseURL}/api/centrodetrabajo`)
         .then((response) => {
             if (!response.ok) {
                 throw new Error('Error al obtener los datos de planta');
@@ -78,7 +79,7 @@ const RegistroUsuarios = () => {
     e.preventDefault();
     if (validar()) {
       try {
-        const response = await fetch('http://localhost:3000/api/registrousuarios', {
+        const response = await fetch(`${api.defaults.baseURL}/api/registrousuarios`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

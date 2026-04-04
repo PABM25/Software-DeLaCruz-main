@@ -42,10 +42,16 @@ router.get('/pecherasexcel', (req, res) => {
 
 
 router.post('/login', (req, res) => {
-    const { correo } = req.body;
+    const { correo, contraseña } = req.body;
+
+    if (!correo || !contraseña) {
+        return res.status(400).json({ success: false, message: 'Falta correo o contraseña' });
+    }
+
     console.log(`API SIMULADA: POST /login para ${correo}`);
 
     // Simula un usuario que coincide
+    // En un entorno real se debe comparar la contraseña, por ahora validamos que exista el usuario
     const user = mockUsuarios.find(u => u.correo === correo);
 
     if (user) {
