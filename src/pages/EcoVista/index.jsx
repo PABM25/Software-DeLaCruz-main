@@ -23,7 +23,7 @@ const Ecologia = () => {
   const [plasticGrowthRate, setPlasticGrowthRate] = useState(0.05);
   const [co2GrowthRate, setCo2GrowthRate] = useState(0.02);
   const [electricityGrowthRate, setElectricityGrowthRate] = useState(0.03);
-  const [randomVariation, setRandomVariation] = useState(0.1); // 10% de variación aleatoria
+  const [randomVariation] = useState(0.1); // 10% de variación aleatoria
 
   const desechable = { pesoPorUso: 30, tiempoDegradacion: 500, emisionesCO2: 0.18, consumoElectrico: 0.2 };
   const reutilizable = { pesoPorUso: 150, tiempoDegradacion: 50, emisionesCO2: 0.3, consumoElectrico: 0.5 };
@@ -111,7 +111,6 @@ const Ecologia = () => {
   const handlePlasticGrowthChange = (e) => setPlasticGrowthRate(Number(e.target.value) / 100);
   const handleCo2GrowthChange = (e) => setCo2GrowthRate(Number(e.target.value) / 100);
   const handleElectricityGrowthChange = (e) => setElectricityGrowthRate(Number(e.target.value) / 100);
-  const handleRandomVariationChange = (e) => setRandomVariation(Number(e.target.value) / 100);
 
   return (
     <div>

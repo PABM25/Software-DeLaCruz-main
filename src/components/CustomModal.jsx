@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import '../../src/styles/custom-modal.css'; // Estilos del modal
 import * as XLSX from 'xlsx'; // Librería para exportar a Excel
-import logo from '../resources/logo.png'; // Logo de la aplicación
 import api from '../api';
 
 /**
@@ -13,15 +12,14 @@ import api from '../api';
  * - show: Booleano que controla si el modal se muestra.
  * - title: Título del modal.
  * - onClose: Función para cerrar el modal.
- * - onConfirm: Función para confirmar las fechas seleccionadas.
  */
 
-const CustomModal = ({ show, title, onClose, onConfirm }) => {
+const CustomModal = ({ show, title, onClose }) => {
   // Estados del componente
   const [startDate, setStartDate] = useState(''); // Fecha inicial
   const [endDate, setEndDate] = useState(''); // Fecha final
   const [pecheras, setPecheras] = useState([]); // Lista de pecheras
-  const [pecherasHistorial, setPecherasHistorial] = useState([]); // Historial de pecheras
+  const [, setPecherasHistorial] = useState([]); // Historial de pecheras
   const [isLoading, setIsLoading] = useState(false); // Controla si se está mostrando la animación de carga
 
   // Efecto para cargar los datos iniciales
@@ -50,13 +48,6 @@ const CustomModal = ({ show, title, onClose, onConfirm }) => {
   // Si el modal no está activo, no renderiza nada
   if (!show) return null;
 
-  // Confirma las fechas seleccionadas y cierra el modal
-  const handleConfirm = () => {
-    const adjustedEndDate = new Date(endDate);
-    adjustedEndDate.setHours(23, 59, 59, 999); // Ajusta el final del día
-    onConfirm(startDate, adjustedEndDate.toISOString());
-    onClose();
-  };
 
   // Muestra alerta si no hay datos para generar el informe
   const showNoDataAlert = () => {

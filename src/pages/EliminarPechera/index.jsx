@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; 
 import '../../styles/eliminar-pechera.css';
 import Navbar from '../../components/navBar';
-import axios from 'axios'; 
 import Swal from 'sweetalert2';
 import api from '../../api';
 
@@ -26,26 +24,6 @@ const EliminarPechera = () => {
             return null;
         }
     };
-
-    // Función para eliminar una pechera individual
-    const eliminarPechera = async (id_pechera_registro) => {
-        try {
-            const response = await api.delete(`/api/eliminarpechera/${id_pechera_registro}`);
-            if (response.status === 200) {
-                setPecheras((prevPecheras) =>
-                    prevPecheras.filter(pechera => pechera.id_pechera_registro !== id_pechera_registro)
-                );
-                Swal.fire("Eliminada", "La pechera se eliminó correctamente", "success");
-            } else {
-                console.error('Error eliminando la pechera:', response.data.message);
-                Swal.fire("Error", "No se pudo eliminar la pechera", "error");
-            }
-        } catch (error) {
-            console.error('Error en la solicitud de eliminación:', error.message);
-            Swal.fire("Error", "Hubo un problema al eliminar la pechera", "error");
-        }
-    };
-    
 
     const eliminarTodasPecheras = async () => {
         if (pecheras.length === 0) {
