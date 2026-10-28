@@ -22,7 +22,7 @@
 * **Bootstrap 5:** Para el diseño responsivo y componentes de interfaz.
 * **React Router:** Gestión de navegación y rutas protegidas.
 * **Axios:** Comunicación HTTP con el servidor.
-* **Librerías Adicionales:** `react-chartjs-2` (Gráficos), `jspdf` (PDFs), `xlsx` (Excel), `sweetalert2` (Alertas).
+* **Librerías Adicionales:** `react-chartjs-2` (Gráficos), `jspdf` (PDFs), `xlsx` (Excel), `sweetalert2` (alertas).
 
 ### Backend (Servidor API)
 * **Node.js & Express:** Servidor REST API robusto.
@@ -37,17 +37,29 @@ Para correr este proyecto en tu computadora, necesitas tener instalado [Node.js]
 
 ### 1. Clonar el repositorio
 ```bash
-git clone [https://github.com/TU_USUARIO/Software-DeLaCruz-main.git](https://github.com/TU_USUARIO/Software-DeLaCruz-main.git)
+git clone https://github.com/PABM25/Software-DeLaCruz-main.git
 cd Software-DeLaCruz-main
+```
 
+### 2. Servidor (API)
+```bash
 cd server
-npm install  # Instala las dependencias del servidor
-node index.js # Inicia el servidor (por defecto en puerto 3000)
+npm install
+node index.js        # puerto 3000 por defecto
+```
 
+Variables opcionales en `server/.env`:
 
-# Si estás en la carpeta 'server', regresa atrás:
+| Variable | Uso |
+| --- | --- |
+| `PORT` | Puerto de la API (3000 por defecto) |
+| `ORIGEN_PERMITIDO` | URLs de la app web que pueden llamar a la API, separadas por coma. Sin ella, se acepta cualquier origen. |
+
+### 3. Interfaz web
+```bash
 cd ..
+npm install
+npm run dev
+```
 
-npm install  # Instala las dependencias de React/Vite
-npm run dev  # Inicia la interfaz web´´´
-
+La interfaz usa `VITE_API_URL` para ubicar la API; sin ella, apunta a la API publicada en Render.

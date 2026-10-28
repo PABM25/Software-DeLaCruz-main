@@ -1,0 +1,24 @@
+name: Verificación
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      # El código tiene errores de lint antiguos (variables e imports sin usar).
+      # Se muestran sin bloquear; quita continue-on-error cuando estén corregidos.
+      - name: Revisión de código
+        run: npm run lint
+        continue-on-error: true
+      - name: Compilación
+        run: npm run build

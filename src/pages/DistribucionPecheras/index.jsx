@@ -11,7 +11,7 @@ import Navbar from "../../components/navBar";
 import Sidebar from "../../components/sidebar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faTrash, faSync } from '@fortawesome/free-solid-svg-icons'
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 import api from '../../api';
 
 const ActualizarPecheras = () => {
@@ -103,7 +103,7 @@ const ActualizarPecheras = () => {
     
         // Verifica que haya UIDs leídos y un centro de trabajo seleccionado
         if (uidsLeidas.length === 0 || !pechera.id_planta) {
-            swal("Campos incompletos", "Por favor, asegúrate de que se hayan leído UIDs y selecciona un centro de trabajo.", "warning");
+            Swal.fire("Campos incompletos", "Por favor, asegúrate de que se hayan leído UIDs y selecciona un centro de trabajo.", "warning");
             return;
         }
     
@@ -122,22 +122,22 @@ const ActualizarPecheras = () => {
             });
     
             if (response.ok) {
-                swal({
+                Swal.fire({
                     title: "¡Éxito!",
                     text: "Pechera actualizada con éxito.",
                     icon: "success",
-                    button: "Aceptar",
+                    confirmButtonText: "Aceptar",
                 }).then(() => {
                     setUidsLeidas([]); // Limpia la lista de UIDs leídos
                     navigate("/datopecheras"); // Redirige a la página principal
                 });
             } else {
                 const errorText = await response.text();
-                swal("Error", `Error: ${errorText}`, "error");
+                Swal.fire("Error", `Error: ${errorText}`, "error");
             }
         } catch (error) {
             console.error('Error al actualizar la pechera:', error);
-            swal("Error", "Hubo un problema al actualizar la pechera. Por favor, inténtalo nuevamente.", "error");
+            Swal.fire("Error", "Hubo un problema al actualizar la pechera. Por favor, inténtalo nuevamente.", "error");
         }
     };
 

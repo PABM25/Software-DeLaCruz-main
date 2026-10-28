@@ -4,7 +4,7 @@ import '../../styles/Lavado.css';
 import Navbar from '../../components/navBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTint } from '@fortawesome/free-solid-svg-icons';
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 import api from '../../api';
 
 
@@ -39,11 +39,11 @@ const Lavado = () => {
             const data = await response.json();
     
             if (!data) {
-                swal({
+                Swal.fire({
                     title: "Pechera no registrada",
                     text: "El UID ingresado no corresponde a una pechera registrada.",
                     icon: "warning",
-                    button: "Aceptar",
+                    confirmButtonText: "Aceptar",
                 });
             } else {
                 setErrorMessage(''); // Limpiar el mensaje de error
@@ -59,11 +59,11 @@ const Lavado = () => {
         } catch (error) {
             console.error('Error al obtener los detalles de la pechera:', error.message);
             setLoading(false);
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: "Pechera no registrada",
                 icon: "error",
-                button: "Aceptar",
+                confirmButtonText: "Aceptar",
             });
         }
     };
@@ -84,22 +84,22 @@ const Lavado = () => {
             const response = await api.post(`/api/registrolavado`, { ids: idsWithObservations });
     
             if (response.status === 200) {
-                swal({
+                Swal.fire({
                     title: "¡Éxito!",
                     text: "El registro de lavado se completó con éxito.",
                     icon: "success",
-                    button: "Aceptar",
+                    confirmButtonText: "Aceptar",
                 }).then(() => {
                     window.location.reload(); // Refrescar la página después de la confirmación
                 });
             }
         } catch (error) {
             console.error('Error al registrar el lavado:', error);
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: "Ocurrió un problema al registrar el lavado. Intenta de nuevo.",
                 icon: "error",
-                button: "Aceptar",
+                confirmButtonText: "Aceptar",
             });
         }
     };

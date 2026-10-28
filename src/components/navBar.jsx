@@ -15,9 +15,6 @@ const Navbar = () => {
   const [usuarioData, setUsuarioData] = useState(null); // Cambié a un solo usuario
   const navigate = useNavigate();
 
-  const toggleSidebar = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
 
   const handleLogoClick = () => {
     navigate("/dashboard");

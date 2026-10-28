@@ -17,7 +17,16 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Configuración de middleware
-app.use(cors());
+// CORS: con ORIGEN_PERMITIDO (URLs separadas por coma) solo esas webs pueden llamar a la API.
+// Sin la variable se acepta cualquier origen, como antes, para no romper despliegues existentes.
+const origenesPermitidos = (process.env.ORIGEN_PERMITIDO || '')
+    .split(',')
+    .map((origen) => origen.trim())
+    .filter(Boolean);
+if (origenesPermitidos.length === 0) {
+    console.warn('ORIGEN_PERMITIDO no está configurado: la API acepta peticiones de cualquier origen.');
+}
+app.use(cors(origenesPermitidos.length ? { origin: origenesPermitidos } : undefined));
 app.use(express.json());
 
 // Configuración de las rutas
