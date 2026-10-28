@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../../styles/eliminar-pechera.css';
 import Navbar from '../../components/navBar';
 import axios from 'axios'; 
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 import api from '../../api';
 
 const EliminarPechera = () => {
@@ -35,30 +35,32 @@ const EliminarPechera = () => {
                 setPecheras((prevPecheras) =>
                     prevPecheras.filter(pechera => pechera.id_pechera_registro !== id_pechera_registro)
                 );
-                swal("Eliminada", "La pechera se eliminó correctamente", "success");
+                Swal.fire("Eliminada", "La pechera se eliminó correctamente", "success");
             } else {
                 console.error('Error eliminando la pechera:', response.data.message);
-                swal("Error", "No se pudo eliminar la pechera", "error");
+                Swal.fire("Error", "No se pudo eliminar la pechera", "error");
             }
         } catch (error) {
             console.error('Error en la solicitud de eliminación:', error.message);
-            swal("Error", "Hubo un problema al eliminar la pechera", "error");
+            Swal.fire("Error", "Hubo un problema al eliminar la pechera", "error");
         }
     };
     
 
     const eliminarTodasPecheras = async () => {
         if (pecheras.length === 0) {
-            swal("Sin pecheras", "No hay pecheras para eliminar", "info");
+            Swal.fire("Sin pecheras", "No hay pecheras para eliminar", "info");
             return;
         }
     
-        const confirm = await swal({
+        const { isConfirmed: confirm } = await Swal.fire({
             title: "¿Estás seguro?",
             text: "Esto eliminará todas las pecheras de la lista. Esta acción no puede deshacerse.",
             icon: "warning",
-            buttons: ["Cancelar", "Eliminar"],
-            dangerMode: true,
+            showCancelButton: true,
+            cancelButtonText: "Cancelar",
+            confirmButtonText: "Eliminar",
+            confirmButtonColor: "#d33",
         });
     
         if (!confirm) return;
@@ -69,29 +71,31 @@ const EliminarPechera = () => {
             const response = await api.delete(`/api/eliminarpecherasmulti`, { data: { ids } });
             if (response.status === 200) {
                 setPecheras([]); // Limpiar la lista en el frontend después de la eliminación
-                swal("Eliminadas", "Todas las pecheras se eliminaron correctamente", "success");
+                Swal.fire("Eliminadas", "Todas las pecheras se eliminaron correctamente", "success");
             } else {
-                swal("Error", "No se pudieron eliminar las pecheras", "error");
+                Swal.fire("Error", "No se pudieron eliminar las pecheras", "error");
             }
         } catch (error) {
             console.error('Error al eliminar las pecheras:', error.message);
-            swal("Error", "Hubo un problema al eliminar las pecheras", "error");
+            Swal.fire("Error", "Hubo un problema al eliminar las pecheras", "error");
         }
     };
     
     const eliminarPecheravista = (id_pechera_registro) => {
-        swal({
+        Swal.fire({
             title: "¿Estás seguro?",
             text: "Esto eliminará la pechera de la lista temporalmente.",
             icon: "warning",
-            buttons: ["Cancelar", "Eliminar"],
-            dangerMode: true,
-        }).then((confirm) => {
+            showCancelButton: true,
+            cancelButtonText: "Cancelar",
+            confirmButtonText: "Eliminar",
+            confirmButtonColor: "#d33",
+        }).then(({ isConfirmed: confirm }) => {
             if (confirm) {
                 setPecheras((prevPecheras) =>
                     prevPecheras.filter(pechera => pechera.id_pechera_registro !== id_pechera_registro)
                 );
-                swal("Eliminada", "La pechera fue eliminada de la vista.", "success");
+                Swal.fire("Eliminada", "La pechera fue eliminada de la vista.", "success");
             }
         });
     };
@@ -121,11 +125,11 @@ const EliminarPechera = () => {
         }  catch (error) {
             console.error('Error al obtener los detalles de la pechera:', error.message);
             setLoading(false);
-            swal({
+            Swal.fire({
                 title: "Error",
                 text: "Pechera no registrada",
                 icon: "error",
-                button: "Aceptar",
+                confirmButtonText: "Aceptar",
             });
         }
     };
